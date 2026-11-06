@@ -24,7 +24,9 @@ namespace ADLXWrapper
             for (uint i = gpuList.Begin(); i < gpuList.End(); i++)
             {
                 gpuList.At(i, gpuPtr).ThrowIfError($"Couldn't get gpu at index {i}");
-                gpus.Add(new GPU(ADLX.gpuP_Ptr_value(gpuPtr)));
+                var gpu = ADLX.gpuP_Ptr_value(gpuPtr);
+                if (gpu != null)
+                    gpus.Add(new GPU(gpu));
             }
             ADLX.delete_gpuP_Ptr(gpuPtr);
             gpuList.DisposeInterface();
